@@ -98,8 +98,10 @@ static NSParagraphStyle *paragraphStyle;
     NSMutableAttributedString *mutableUsernameAndCaptionString = [[NSMutableAttributedString alloc] initWithString:baseString
                                                                                                         attributes:@{NSFontAttributeName : [lightFont fontWithSize:usernameFontSize], NSParagraphStyleAttributeName : paragraphStyle}];
     NSRange usernameRange = [baseString rangeOfString:self.mediaItem.user.userName];
+    NSRange captionRange  = [baseString rangeOfString:self.mediaItem.caption];
     [mutableUsernameAndCaptionString addAttribute:NSFontAttributeName value:[boldFont fontWithSize:usernameFontSize] range:usernameRange];
     [mutableUsernameAndCaptionString addAttribute:NSForegroundColorAttributeName value:linkColor range:usernameRange];
+    [mutableUsernameAndCaptionString addAttribute:NSKernAttributeName value:@3 range:captionRange];
     
     return mutableUsernameAndCaptionString;
 }
@@ -110,14 +112,30 @@ static NSParagraphStyle *paragraphStyle;
     for (Comment *comment in self.mediaItem.comments) {
         NSString *baseString = [NSString stringWithFormat:@"%@ %@\n", comment.from.userName, comment.text];
         
-        NSMutableAttributedString *oneCommenString = [[NSMutableAttributedString alloc] initWithString:baseString attributes:@{NSFontAttributeName : lightFont, NSParagraphStyleAttributeName : paragraphStyle}];
+        NSMutableAttributedString *oneCommentString;
+        if ([self.mediaItem.comments indexOfObject:comment] % 2 == 0) {
+            NSMutableParagraphStyle *rightAligned = [[NSMutableParagraphStyle alloc] init];
+            rightAligned.headIndent = 20.0;
+            rightAligned.firstLineHeadIndent = 20.0;
+            rightAligned.tailIndent = -20.0;
+            rightAligned.paragraphSpacing = 5;
+            rightAligned.alignment = NSTextAlignmentRight;
+            oneCommentString = [[NSMutableAttributedString alloc] initWithString:baseString attributes:@{NSFontAttributeName : lightFont, NSParagraphStyleAttributeName : rightAligned}];
+        } else {
+            oneCommentString = [[NSMutableAttributedString alloc] initWithString:baseString attributes:@{NSFontAttributeName : lightFont, NSParagraphStyleAttributeName : paragraphStyle}];
+        }
+        
 
         NSRange usernameRange = [baseString rangeOfString:comment.from.userName];
         
-        [oneCommenString addAttribute:NSFontAttributeName value:boldFont range:usernameRange];
-        [oneCommenString addAttribute:NSForegroundColorAttributeName value:linkColor range:usernameRange];
+        [oneCommentString addAttribute:NSFontAttributeName value:boldFont range:usernameRange];
+        [oneCommentString addAttribute:NSForegroundColorAttributeName value:linkColor range:usernameRange];
+        if ([self.mediaItem.comments indexOfObject:comment] == 0) {
+            NSRange commentRange = [baseString rangeOfString:comment.text];
+            [oneCommentString addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:commentRange];
+        }
         
-        [commentString appendAttributedString:oneCommenString];
+        [commentString appendAttributedString:oneCommentString];
     }
     
     return commentString;
