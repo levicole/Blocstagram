@@ -54,6 +54,7 @@ static NSParagraphStyle *paragraphStyle;
     
     usernameLabelGray = [UIColor colorWithRed:0.933 green:0.933 blue:0.933 alpha:1];
     commentLabelGray  = [UIColor colorWithRed:0.898 green:0.898 blue:0.898 alpha:1];
+    linkColor = [UIColor colorWithRed:0.345 green:0.314 blue:0.427 alpha:1];
     NSMutableParagraphStyle *mutableParagrapStyle = [[NSMutableParagraphStyle alloc] init];
     mutableParagrapStyle.headIndent = 20.0;
     mutableParagrapStyle.firstLineHeadIndent = 20.0;
@@ -61,6 +62,16 @@ static NSParagraphStyle *paragraphStyle;
     mutableParagrapStyle.paragraphSpacing = 5;
     
     paragraphStyle = mutableParagrapStyle;
+}
+
++(CGFloat) heightForMediaItem:(Media *)mediaItem width:(CGFloat)width {
+    MediaTableViewCell *layoutCell = [[MediaTableViewCell alloc] init];
+    layoutCell.frame = CGRectMake(0,0,width,CGFLOAT_MAX);
+    
+    layoutCell.mediaItem = mediaItem;
+    [layoutCell layoutSubviews];
+    
+    return CGRectGetMaxY(layoutCell.commentLabel.frame);
 }
 
 - (void) layoutSubviews {
@@ -87,8 +98,6 @@ static NSParagraphStyle *paragraphStyle;
     NSMutableAttributedString *mutableUsernameAndCaptionString = [[NSMutableAttributedString alloc] initWithString:baseString
                                                                                                         attributes:@{NSFontAttributeName : [lightFont fontWithSize:usernameFontSize], NSParagraphStyleAttributeName : paragraphStyle}];
     NSRange usernameRange = [baseString rangeOfString:self.mediaItem.user.userName];
-    NSLog(@"userName: %@\nbaseString: %@\n usernameRange: %@", self.mediaItem.user.userName, baseString, NSStringFromRange(usernameRange));
-    NSLog(@"something: %@", [boldFont fontWithSize:usernameFontSize]);
     [mutableUsernameAndCaptionString addAttribute:NSFontAttributeName value:[boldFont fontWithSize:usernameFontSize] range:usernameRange];
     [mutableUsernameAndCaptionString addAttribute:NSForegroundColorAttributeName value:linkColor range:usernameRange];
     
@@ -116,7 +125,7 @@ static NSParagraphStyle *paragraphStyle;
 
 - (void) setMediaItem:(Media *)mediaItem {
     _mediaItem = mediaItem;
-    self.mediaItem.image = _mediaItem.image;
+    self.mediaImageView.image = _mediaItem.image;
     self.usernameAndCaptionLabel.attributedText = [self usernameAndCaptionString];
     self.commentLabel.attributedText = [self commentString];
 }
