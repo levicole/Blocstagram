@@ -17,7 +17,8 @@
 }
 
 @property (nonatomic, strong) NSArray *mediaItems;
-
+@property (nonatomic, assign) BOOL isRefreshing;
+@property (nonatomic, assign) BOOL isLoadinOlderItems;
 @end
 
 @implementation DataSource
@@ -116,6 +117,48 @@
         [s appendFormat:@"%C", c];
     }
     return [NSString stringWithString:s];
+}
+
+- (void) requestNewItemsWithCompletionHandler:(NewItemCompletionBlock)completionHandler {
+    if (self.isRefreshing == NO) {
+        self.isRefreshing = YES;
+        
+        // I did this on my own because I wanted the image to be random too...
+        u_int32_t randomImageIndex = arc4random_uniform(9)+1;
+        NSString *randomImageName  = [NSString stringWithFormat:@"%u.jpg", randomImageIndex];
+        Media *media  = [[Media alloc] init];
+        media.user    = [self randomUser];
+        media.image   = [UIImage imageNamed:randomImageName];
+        media.caption = [self randomSentence];
+        
+        NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
+        [mutableArrayWithKVO insertObject:media atIndex:0];
+        
+        self.isRefreshing = NO;
+        
+        if (completionHandler) {
+            completionHandler(nil);
+        }
+    }
+}
+
+- (void) requestOldItemsWithCompletionHandler:(NewItemCompletionBlock)completionHandler {
+    if (self.isLoadinOlderItems == NO) {
+        self.isLoadinOlderItems = YES;
+        Media *media = [[Media alloc] init];
+        media.user   = [self randomUser];
+        media.image  = [UIImage imageNamed:@"1.jpg"];
+        media.caption = [self randomSentence];
+        
+        NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
+        [mutableArrayWithKVO addObject:media];
+
+        self.isLoadinOlderItems = NO;
+        
+        if (completionHandler) {
+            completionHandler(nil);
+        }
+    }
 }
 
 #pragma mark - Key/Value Observing
