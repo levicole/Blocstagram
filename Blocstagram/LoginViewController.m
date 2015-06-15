@@ -33,8 +33,15 @@ NSString *const LoginViewControllerDidGetAccessTokenNotification = @"LoginViewCo
     
     [self.view addSubview:webView];
     self.webView = webView;
-
     
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:self action:@selector(goHome)];
+
+    [self goHome];
+    
+}
+
+- (void) goHome {
     NSString *urlString = [NSString stringWithFormat:@"https://instagram.com/oauth/authorize/?client_id=%@&redirect_uri=%@&response_type=token", [DataSource instaGramClientID], [self redirectURI]];
     NSURL *url = [NSURL URLWithString:urlString];
     
@@ -42,7 +49,6 @@ NSString *const LoginViewControllerDidGetAccessTokenNotification = @"LoginViewCo
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         [self.webView loadRequest:request];
     }
-    
 }
 
 - (void) viewWillLayoutSubviews {
