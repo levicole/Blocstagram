@@ -10,6 +10,7 @@
 #import "User.h"
 #import "Media.h"
 #import "Comment.h"
+#import "LoginViewController.h"
 
 
 @interface DataSource() {
@@ -19,9 +20,15 @@
 @property (nonatomic, strong) NSArray *mediaItems;
 @property (nonatomic, assign) BOOL isRefreshing;
 @property (nonatomic, assign) BOOL isLoadinOlderItems;
+@property (nonatomic, strong) NSString *accessToken;
+
 @end
 
 @implementation DataSource
+
++(NSString *) instaGramClientID {
+    return @"015a4cbd61824f43877dcaafff56e810";
+}
 
 +(instancetype) sharedInstance {
     static dispatch_once_t once;
@@ -37,102 +44,62 @@
     self = [super init];
     
     if (self) {
-        [self addRandomData];
+        [self registerForAccessTokenNotification];
     }
     
     return self;
 }
 
-- (void) addRandomData {
-    NSMutableArray *randomMediaItems = [NSMutableArray array];
-    
-    for (int i = 0; i <= 10; i++) {
-        NSString *imageName = [NSString stringWithFormat:@"%d.jpg", i];
-        UIImage *image = [UIImage imageNamed:imageName];
-        
-        if (image) {
-            Media *media = [[Media alloc] init];
-            media.user   = [self randomUser];
-            media.image  = image;
-            media.caption = [self randomSentence];
-            
-            NSUInteger commentCount = arc4random_uniform(10) + 2;
-            
-            NSMutableArray *randomComments = [NSMutableArray array];
+- (void) registerForAccessTokenNotification {
+    [[NSNotificationCenter defaultCenter] addObserverForName:LoginViewControllerDidGetAccessTokenNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+        self.accessToken = note.object;
+        [self populateDataWithParameters:nil];
+    }];
+}
 
-            for (int i = 0; i <= commentCount; i++) {
-                Comment *randomComment = [self randomComment];
-                [randomComments addObject:randomComment];
+- (void) populateDataWithParameters:(NSDictionary *)parameters {
+    if (self.accessToken) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            NSMutableString *urlString = [NSMutableString stringWithFormat:@"https://api.instagram.com/v1/users/self/feed?access_token=%@", self.accessToken];
+            for (NSString *parameterName in parameters) {
+                [urlString appendFormat:@"&%@=%@", parameterName, parameters[parameterName]];
             }
             
-            media.comments = randomComments;
+            NSURL *url = [NSURL URLWithString:urlString];
             
-            [randomMediaItems addObject:media];
-        }
+            if (url) {
+                NSURLRequest *request = [NSURLRequest requestWithURL:url];
+                
+                NSURLResponse *response;
+                
+                NSError *webError;
+                NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&webError];
+                
+                if (responseData) {
+                    NSError *jsonError;
+                    
+                    NSDictionary *feedDictionary = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
+                    
+                    if (feedDictionary) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self parseDataFromFeedDictionary:feedDictionary fromRequestWithParameters:parameters];
+                        });
+                    }
+                }
+            }
+        });
     }
-    
-    self.mediaItems = randomMediaItems;
 }
 
-- (User *) randomUser {
-    User *user = [[User alloc] init];
-    
-    user.userName = [self randomStringOfLength:arc4random_uniform(10) + 2];
-    NSString *firstName = [self randomStringOfLength:arc4random_uniform(7) + 2];
-    NSString *lastName  = [self randomStringOfLength:arc4random_uniform(12) + 2];
-    
-    user.fullName = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
-    
-    return user;
-}
-
-- (Comment *) randomComment {
-    Comment *comment = [[Comment alloc] init];
-    
-    comment.from = [self randomUser];
-    comment.text = [self randomSentence];
-    
-    return comment;
-}
-
-- (NSString *) randomSentence {
-    NSUInteger wordCount = arc4random_uniform(20) + 2;
-    
-    NSMutableString *randomSentence = [[NSMutableString alloc] init];
-    
-    for (int i = 0; i <= wordCount; i++) {
-        NSString *randomWord = [self randomStringOfLength:arc4random_uniform(12) + 2];
-        [randomSentence appendFormat:@"%@ ", randomWord];
-    }
-    return randomSentence;
-}
-
-- (NSString *) randomStringOfLength:(NSUInteger) len {
-    NSString *alphabet = @"abcdefghijklmnopqrstuvwxyz";
-    
-    NSMutableString *s = [NSMutableString string];
-    for (NSUInteger i = 0U; i < len; i++) {
-        u_int32_t r = arc4random_uniform((uint_fast32_t)[alphabet length]);
-        unichar c = [alphabet characterAtIndex:r];
-        [s appendFormat:@"%C", c];
-    }
-    return [NSString stringWithString:s];
+- (void) parseDataFromFeedDictionary:(NSDictionary *)feedDictionary fromRequestWithParameters:(NSDictionary *)parameters {
+    NSLog(@"%@", feedDictionary);
 }
 
 - (void) requestNewItemsWithCompletionHandler:(NewItemCompletionBlock)completionHandler {
     if (self.isRefreshing == NO) {
         self.isRefreshing = YES;
         
-        // I did this on my own because I wanted the image to be random too...
-        u_int32_t randomImageIndex = arc4random_uniform(9)+1;
-        NSString *randomImageName  = [NSString stringWithFormat:@"%u.jpg", randomImageIndex];
-        Media *media  = [[Media alloc] init];
-        media.user    = [self randomUser];
-        media.image   = [UIImage imageNamed:randomImageName];
-        media.caption = [self randomSentence];
-        
-        NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
-        [mutableArrayWithKVO insertObject:media atIndex:0];
+        //TODO: add images
         
         self.isRefreshing = NO;
         
@@ -145,13 +112,8 @@
 - (void) requestOldItemsWithCompletionHandler:(NewItemCompletionBlock)completionHandler {
     if (self.isLoadinOlderItems == NO) {
         self.isLoadinOlderItems = YES;
-        Media *media = [[Media alloc] init];
-        media.user   = [self randomUser];
-        media.image  = [UIImage imageNamed:@"1.jpg"];
-        media.caption = [self randomSentence];
         
-        NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
-        [mutableArrayWithKVO addObject:media];
+        //TODO: Add images
 
         self.isLoadinOlderItems = NO;
         
