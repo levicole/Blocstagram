@@ -62,7 +62,6 @@ NSString *const LoginViewControllerDidGetAccessTokenNotification = @"LoginViewCo
 - (void) clearInstagramCookies {
     for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
         NSRange domainRange = [cookie.domain rangeOfString:@"instagram.com"];
-        NSLog(@"COOKIES!!! %@", cookie.domain);
         if (domainRange.location != NSNotFound) {
             [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
         }
