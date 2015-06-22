@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0549E2AF1B361ADF000426A4 /* MediaFullScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0549E2AE1B361ADF000426A4 /* MediaFullScreenViewController.m */; };
 		056CE1271B26350A001BAEF3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 056CE1261B26350A001BAEF3 /* main.m */; };
 		056CE12A1B26350A001BAEF3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 056CE1291B26350A001BAEF3 /* AppDelegate.m */; };
 		056CE1321B26350B001BAEF3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 056CE1311B26350B001BAEF3 /* Images.xcassets */; };
@@ -43,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0549E2AD1B361ADF000426A4 /* MediaFullScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaFullScreenViewController.h; sourceTree = "<group>"; };
+		0549E2AE1B361ADF000426A4 /* MediaFullScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaFullScreenViewController.m; sourceTree = "<group>"; };
 		056CE1211B26350A001BAEF3 /* Blocstagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blocstagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		056CE1251B26350A001BAEF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		056CE1261B26350A001BAEF3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -124,6 +127,8 @@
 		056CE1231B26350A001BAEF3 /* Blocstagram */ = {
 			isa = PBXGroup;
 			children = (
+				0549E2AD1B361ADF000426A4 /* MediaFullScreenViewController.h */,
+				0549E2AE1B361ADF000426A4 /* MediaFullScreenViewController.m */,
 				056CE1711B2E3F52001BAEF3 /* LoginViewController.h */,
 				056CE1721B2E3F52001BAEF3 /* LoginViewController.m */,
 				056CE16E1B278144001BAEF3 /* MediaTableViewCell.h */,
@@ -259,6 +264,7 @@
 				TargetAttributes = {
 					056CE1201B26350A001BAEF3 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = W9NE94TF4H;
 					};
 					056CE1391B26350B001BAEF3 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -352,6 +358,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0549E2AF1B361ADF000426A4 /* MediaFullScreenViewController.m in Sources */,
 				056CE1641B264554001BAEF3 /* User.m in Sources */,
 				056CE16A1B26472E001BAEF3 /* Comment.m in Sources */,
 				056CE1701B278144001BAEF3 /* MediaTableViewCell.m in Sources */,
@@ -481,9 +488,13 @@
 			baseConfigurationReference = D8B774E0A331A813C48E5766 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Blocstagram/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -492,9 +503,13 @@
 			baseConfigurationReference = DB83D6CEE5599D98A9D63698 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Blocstagram/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
