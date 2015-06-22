@@ -14,6 +14,7 @@
 @property (nonatomic, strong) Media *media;
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
 @property (nonatomic, strong) UITapGestureRecognizer *doubleTap;
+@property (nonatomic, strong) UIButton *shareButton;
 
 @end
 
@@ -30,6 +31,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.scrollView = [UIScrollView new];
     self.scrollView.delegate = self;
     self.scrollView.backgroundColor = [UIColor whiteColor];
@@ -56,10 +58,25 @@
     
     [self.scrollView addGestureRecognizer:self.tap];
     [self.scrollView addGestureRecognizer:self.doubleTap];
+    
+    self.shareButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.shareButton.backgroundColor = [UIColor whiteColor];
+    self.shareButton.layer.cornerRadius = 5;
+    
+    [self.shareButton setTitle:@"Share" forState:UIControlStateNormal];
+    [self.shareButton setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.5]];
+    [self.shareButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.view addSubview:self.shareButton];
+    [self.shareButton addTarget:self action:@selector(doShare) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void) viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
+    
+    [self.shareButton.titleLabel sizeToFit];
+    CGSize shareButtonTitleLabelSize = self.shareButton.titleLabel.frame.size;
+    
+    self.shareButton.frame = CGRectMake(CGRectGetWidth(self.view.bounds) - shareButtonTitleLabelSize.width - 40, 40, shareButtonTitleLabelSize.width + 20, shareButtonTitleLabelSize.height + 10);
     
     self.scrollView.frame = self.view.bounds;
     
@@ -138,6 +155,24 @@
         [self.scrollView zoomToRect:CGRectMake(x, y, width, height) animated:YES];
     } else {
         [self.scrollView setZoomScale:self.scrollView.minimumZoomScale animated:YES];
+    }
+}
+
+#pragma mark - misc
+
+-(void) doShare {
+    NSMutableArray *itemsToShare = [NSMutableArray array];
+    if (self.media.caption.length > 0) {
+        [itemsToShare addObject:self.media.caption];
+    }
+    
+    if (self.media.image) {
+        [itemsToShare addObject:self.media.image];
+    }
+    
+    if (itemsToShare.count > 0) {
+        UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
+        [self presentViewController:activityVC animated:YES completion:nil];
     }
 }
 @end
