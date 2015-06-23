@@ -201,5 +201,10 @@
         [self presentViewController:activityVC animated:YES completion:nil];
     }
 }
+
+- (void) cell:(MediaTableViewCell *)cell didTwoFingerPress:(UIImageView *)imageView {
+    NSLog(@"Downloading image");
+    [[DataSource sharedInstance] downloadImageForMediaItem:cell.mediaItem];
+}
 @end
 
