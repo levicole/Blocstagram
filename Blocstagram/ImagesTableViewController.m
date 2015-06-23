@@ -183,6 +183,16 @@
     [self infiniteScrollIfNecessary];
 }
 
+- (void) scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+    if ([scrollView decelerationRate] < UIScrollViewDecelerationRateNormal) {
+        NSArray *visibleIndexPaths = [self.tableView indexPathsForVisibleRows];
+        for (NSIndexPath *indexPath in visibleIndexPaths) {
+            Media *item = [DataSource sharedInstance].mediaItems[indexPath.row];
+            [[DataSource sharedInstance] downloadImageForMediaItem:item];
+        }
+    }
+}
+
 - (void) dealloc {
     [[DataSource sharedInstance] removeObserver:self forKeyPath:@"mediaItems"];
 }
@@ -209,5 +219,6 @@
         [self presentViewController:activityVC animated:YES completion:nil];
     }
 }
+
 @end
 
