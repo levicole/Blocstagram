@@ -65,7 +65,6 @@
             break;
         case LikeStateNotLiked:
         case LikeStateLiked:
-            NSLog(@"Liking");
             self.spinnerView.hidden = YES;
             self.userInteractionEnabled = YES;
     }
