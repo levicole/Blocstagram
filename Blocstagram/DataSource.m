@@ -195,6 +195,31 @@
     }
 }
 
+- (void) toggleLikeOnMediaItem:(Media *)mediaItem withCompletionHandler:(void (^)(void))completionHandler {
+    if (mediaItem.likeState == LikeStateNotLiked) {
+        mediaItem.likeState = LikeStateLiking;
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            mediaItem.likeState = LikeStateLiked;
+            
+            if (completionHandler) {
+                completionHandler();
+            }
+        });
+        
+    } else if (mediaItem.likeState == LikeStateLiked) {
+        mediaItem.likeState = LikeStateUnliking;
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            mediaItem.likeState = LikeStateNotLiked;
+            
+            if (completionHandler) {
+                completionHandler();
+            }
+        });
+    }
+}
+
 - (void) requestNewItemsWithCompletionHandler:(NewItemCompletionBlock)completionHandler {
     self.thereAreNoMoreOlderMessages = NO;
     if (self.isRefreshing == NO) {
