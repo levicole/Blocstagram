@@ -32,6 +32,7 @@
 		056CE1731B2E3F52001BAEF3 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 056CE1721B2E3F52001BAEF3 /* LoginViewController.m */; };
 		059A8ECB1B3B0C6500E5B454 /* CircleSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 059A8ECA1B3B0C6500E5B454 /* CircleSpinnerView.m */; };
 		059A8ECE1B3B4F5600E5B454 /* LikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 059A8ECD1B3B4F5600E5B454 /* LikeButton.m */; };
+		059A8ED11B3D1F1600E5B454 /* LikesCountLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 059A8ED01B3D1F1600E5B454 /* LikesCountLabel.m */; };
 		493148059E3D28EAEF4990B3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA6AC044BD68EAB423370F2 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -86,6 +87,8 @@
 		059A8ECA1B3B0C6500E5B454 /* CircleSpinnerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleSpinnerView.m; sourceTree = "<group>"; };
 		059A8ECC1B3B4F5600E5B454 /* LikeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikeButton.h; sourceTree = "<group>"; };
 		059A8ECD1B3B4F5600E5B454 /* LikeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikeButton.m; sourceTree = "<group>"; };
+		059A8ECF1B3D1F1600E5B454 /* LikesCountLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikesCountLabel.h; sourceTree = "<group>"; };
+		059A8ED01B3D1F1600E5B454 /* LikesCountLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikesCountLabel.m; sourceTree = "<group>"; };
 		BAA6AC044BD68EAB423370F2 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8B774E0A331A813C48E5766 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		DB83D6CEE5599D98A9D63698 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -113,6 +116,8 @@
 		056CE1181B26350A001BAEF3 = {
 			isa = PBXGroup;
 			children = (
+				059A8ECF1B3D1F1600E5B454 /* LikesCountLabel.h */,
+				059A8ED01B3D1F1600E5B454 /* LikesCountLabel.m */,
 				056CE1231B26350A001BAEF3 /* Blocstagram */,
 				056CE13D1B26350B001BAEF3 /* BlocstagramTests */,
 				056CE1221B26350A001BAEF3 /* Products */,
@@ -370,6 +375,7 @@
 			files = (
 				0549E2AF1B361ADF000426A4 /* MediaFullScreenViewController.m in Sources */,
 				059A8ECB1B3B0C6500E5B454 /* CircleSpinnerView.m in Sources */,
+				059A8ED11B3D1F1600E5B454 /* LikesCountLabel.m in Sources */,
 				056CE1641B264554001BAEF3 /* User.m in Sources */,
 				056CE16A1B26472E001BAEF3 /* Comment.m in Sources */,
 				056CE1701B278144001BAEF3 /* MediaTableViewCell.m in Sources */,

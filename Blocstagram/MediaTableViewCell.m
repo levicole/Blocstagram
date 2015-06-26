@@ -11,12 +11,14 @@
 #import "Comment.h"
 #import "User.h"
 #import "LikeButton.h"
+#import "LikesCountLabel.h"
 
 @interface MediaTableViewCell () <UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UIImageView *mediaImageView;
 @property (nonatomic, strong) UILabel *usernameAndCaptionLabel;
 @property (nonatomic, strong) UILabel *commentLabel;
+@property (nonatomic, strong) LikesCountLabel *likesCountLabel;
 @property (nonatomic, strong) NSLayoutConstraint *imageHeightConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *usernameAndCaptionLabelHeightConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *commentLabelHeightConstraint;
@@ -62,14 +64,18 @@ static NSParagraphStyle *paragraphStyle;
         [self.likeButton addTarget:self action:@selector(likePressed:) forControlEvents:UIControlEventTouchUpInside];
         self.likeButton.backgroundColor = usernameLabelGray;
         
-        for(UIView *view in @[self.mediaImageView, self.usernameAndCaptionLabel, self.commentLabel, self.likeButton]) {
+        self.likesCountLabel = [[LikesCountLabel alloc] init];
+        self.likesCountLabel.numberOfLines = 0;
+        self.likesCountLabel.backgroundColor = usernameLabelGray;
+        
+        for(UIView *view in @[self.mediaImageView, self.usernameAndCaptionLabel, self.commentLabel, self.likeButton, self.likesCountLabel]) {
             [self.contentView addSubview:view];
             view.translatesAutoresizingMaskIntoConstraints = NO;
         }
         
-        NSDictionary *viewDictionary = NSDictionaryOfVariableBindings(_mediaImageView, _usernameAndCaptionLabel, _commentLabel, _likeButton);
+        NSDictionary *viewDictionary = NSDictionaryOfVariableBindings(_mediaImageView, _usernameAndCaptionLabel, _commentLabel, _likeButton, _likesCountLabel);
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_mediaImageView]|" options:kNilOptions metrics:nil views:viewDictionary]];
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_usernameAndCaptionLabel][_likeButton(==38)]|" options:NSLayoutFormatAlignAllTop | NSLayoutFormatAlignAllBottom metrics:nil views:viewDictionary]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_usernameAndCaptionLabel][_likesCountLabel][_likeButton(==38)]|" options:NSLayoutFormatAlignAllTop | NSLayoutFormatAlignAllBottom  metrics:nil views:viewDictionary]];
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_commentLabel]|" options:kNilOptions metrics:nil views:viewDictionary]];
         
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_mediaImageView][_usernameAndCaptionLabel][_commentLabel]" options:kNilOptions metrics:nil views:viewDictionary]];
@@ -188,10 +194,11 @@ static NSParagraphStyle *paragraphStyle;
 
 - (void) setMediaItem:(Media *)mediaItem {
     _mediaItem = mediaItem;
-    self.mediaImageView.image = _mediaItem.image;
+    self.mediaImageView.image = mediaItem.image;
     self.usernameAndCaptionLabel.attributedText = [self usernameAndCaptionString];
     self.commentLabel.attributedText = [self commentString];
     self.likeButton.likeButtonState = mediaItem.likeState;
+    self.likesCountLabel.attributedText = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld", mediaItem.likesCount] attributes:@{NSFontAttributeName : [lightFont fontWithSize:14]}];
 }
 
 - (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
