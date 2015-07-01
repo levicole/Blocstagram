@@ -11,7 +11,6 @@
 
 @interface MediaFullScreenViewController () <UIScrollViewDelegate>
 
-@property (nonatomic, strong) Media *media;
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
 @property (nonatomic, strong) UITapGestureRecognizer *doubleTap;
 
@@ -63,18 +62,21 @@
     
     self.scrollView.frame = self.view.bounds;
     
+    [self recalculateZoomScale];
+}
+
+- (void) recalculateZoomScale {
     CGSize scrollViewFrameSize = self.scrollView.frame.size;
-    CGSize contentSize    = self.scrollView.contentSize;
+    CGSize scrollViewContentSize = self.scrollView.contentSize;
     
+    scrollViewContentSize.height /= self.scrollView.zoomScale;
+    scrollViewContentSize.width /= self.scrollView.zoomScale;
     
-    //    this is what I originally did.
-    //    CGFloat heightScale = CGRectGetHeight(self.scrollView.frame)/self.media.image.size.height;
-    //    CGFloat widthScale  = CGRectGetWidth(self.scrollView.frame)/self.media.image.size.width;
+    CGFloat scaleWidth = scrollViewFrameSize.width / scrollViewContentSize.width;
+    CGFloat scaleHeight = scrollViewFrameSize.height / scrollViewContentSize.height;
+    CGFloat minScale = MIN(scaleWidth, scaleHeight);
     
-    CGFloat heightScale = scrollViewFrameSize.height/contentSize.height;
-    CGFloat widthScale  = scrollViewFrameSize.width/contentSize.width;
-    
-    self.scrollView.minimumZoomScale = MIN(heightScale, widthScale);
+    self.scrollView.minimumZoomScale = minScale;
     self.scrollView.maximumZoomScale = 1;
     
 }
