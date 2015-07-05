@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PostToInstagramViewController : UICollectionViewController
+@interface PostToInstagramViewController : UIViewController
 
 - (instancetype) initWithImage:(UIImage *)sourceImage;
 
