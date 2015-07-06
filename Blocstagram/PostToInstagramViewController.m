@@ -7,6 +7,7 @@
 //
 
 #import "PostToInstagramViewController.h"
+#import "FilterViewCell.h"
 
 @interface PostToInstagramViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UIDocumentInteractionControllerDelegate>
 
@@ -92,7 +93,7 @@
         self.navigationItem.rightBarButtonItem = self.sendBarButton;
     }
     
-    [self.filterCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+    [self.filterCollectionView registerClass:[FilterViewCell class] forCellWithReuseIdentifier:@"filterCell"];
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.filterCollectionView.backgroundColor = [UIColor whiteColor];
@@ -125,6 +126,7 @@
     
     UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.filterCollectionView.collectionViewLayout;
     flowLayout.itemSize = CGSizeMake(CGRectGetHeight(self.filterCollectionView.frame) - 20, CGRectGetHeight(self.filterCollectionView.frame));
+    
 }
 
 #pragma mark - UICollectionView delegate and data source
@@ -134,36 +136,10 @@
 }
 
 - (UICollectionViewCell*) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    FilterViewCell *cell = (FilterViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"filterCell" forIndexPath:indexPath];
     
-    static NSInteger imageViewTag = 1000;
-    static NSInteger labelTag = 1001;
-    
-    UIImageView *thumbnail = (UIImageView *)[cell.contentView viewWithTag:imageViewTag];
-    UILabel *label = (UILabel *)[cell.contentView viewWithTag:labelTag];
-    
-    UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.filterCollectionView.collectionViewLayout;
-    CGFloat thumbnailEdgeSize = flowLayout.itemSize.width;
-    
-    if (!thumbnail) {
-        thumbnail = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, thumbnailEdgeSize, thumbnailEdgeSize)];
-        thumbnail.contentMode = UIViewContentModeScaleAspectFill;
-        thumbnail.tag = imageViewTag;
-        thumbnail.clipsToBounds = YES;
-        
-        [cell.contentView addSubview:thumbnail];
-    }
-    
-    if (!label) {
-        label = [[UILabel alloc] initWithFrame:CGRectMake(0, thumbnailEdgeSize, thumbnailEdgeSize, 20)];
-        label.tag = labelTag;
-        label.textAlignment = NSTextAlignmentCenter;
-        label.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:10];
-        [cell.contentView addSubview:label];
-    }
-    
-    thumbnail.image = self.filterImages[indexPath.row];
-    label.text = self.filterTitles[indexPath.row];
+    cell.filteredImage = self.filterImages[indexPath.row];
+    cell.filterName    = self.filterTitles[indexPath.row];
     
     return cell;
 }
@@ -226,6 +202,16 @@
         if (warmFilter) {
             [warmFilter setValue:sourceCIImage forKey:kCIInputImageKey];
             [self addCIImageToCollectionView:warmFilter.outputImage withFilterTitle:NSLocalizedString(@"Warm", @"Warm Filter")];
+        }
+    }];
+    
+    // Polaroid filter
+    [self.photoFilterOperationQueue addOperationWithBlock:^{
+        CIFilter *warmFilter = [CIFilter filterWithName:@"CIPhotoEffectInstant"];
+        
+        if (warmFilter) {
+            [warmFilter setValue:sourceCIImage forKey:kCIInputImageKey];
+            [self addCIImageToCollectionView:warmFilter.outputImage withFilterTitle:NSLocalizedString(@"Polaroid", @"Polaroid Filter")];
         }
     }];
     
@@ -318,6 +304,34 @@
             [self addCIImageToCollectionView:composite.outputImage withFilterTitle:NSLocalizedString(@"Film", @"Film filter")];
         }
 
+    }];
+    
+    // Scan Line Filter
+    [self.photoFilterOperationQueue addOperationWithBlock:^{
+        CGFloat halfWidth = CGRectGetWidth(sourceCIImage.extent)/2;
+        CIFilter *linesFilter = [CIFilter filterWithName:@"CIStripesGenerator"];
+        
+        if (linesFilter) {
+            CIVector *centerVector = [CIVector vectorWithCGPoint:CGPointMake(halfWidth, halfWidth)];
+        
+            CIColor *whiteColor = [CIColor colorWithString:@"0.1 0.1 0.1 0.8"];
+            CIColor *blackColor = [CIColor colorWithString:@"1.0 1.0 1.0 0.0"];
+            
+            [linesFilter setValue:centerVector forKey:@"inputCenter"];
+            [linesFilter setValue:whiteColor   forKey:@"inputColor0"];
+            [linesFilter setValue:blackColor   forKey:@"inputColor1"];
+            [linesFilter setValue:@5           forKey:@"inputWidth"];
+            
+            CIImage *lines = [linesFilter.outputImage imageByApplyingTransform:CGAffineTransformMakeRotation((M_PI * 90)/180.0)];
+            lines = [lines imageByCroppingToRect:sourceCIImage.extent];
+            CIImage *imageWithScanLines = [CIFilter filterWithName:@"CISourceOverCompositing"
+                                                     keysAndValues:
+                                                        kCIInputImageKey, lines,
+                                                        kCIInputBackgroundImageKey,
+                                                        sourceCIImage, nil].outputImage;
+            
+            [self addCIImageToCollectionView:imageWithScanLines withFilterTitle:@"Scan Line"];
+        }
     }];
 }
 

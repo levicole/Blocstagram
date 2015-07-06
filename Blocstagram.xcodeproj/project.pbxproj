@@ -14,6 +14,7 @@
 		0506FB661B424187004733DA /* CropBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 0506FB651B424187004733DA /* CropBox.m */; };
 		0506FB691B42460A004733DA /* ImageLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0506FB681B42460A004733DA /* ImageLibraryViewController.m */; };
 		0506FB6C1B461A61004733DA /* PostToInstagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0506FB6B1B461A61004733DA /* PostToInstagramViewController.m */; };
+		0506FB6F1B49CA24004733DA /* FilterViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0506FB6E1B49CA24004733DA /* FilterViewCell.m */; };
 		0549E2AF1B361ADF000426A4 /* MediaFullScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0549E2AE1B361ADF000426A4 /* MediaFullScreenViewController.m */; };
 		056CE1271B26350A001BAEF3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 056CE1261B26350A001BAEF3 /* main.m */; };
 		056CE12A1B26350A001BAEF3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 056CE1291B26350A001BAEF3 /* AppDelegate.m */; };
@@ -68,6 +69,8 @@
 		0506FB681B42460A004733DA /* ImageLibraryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageLibraryViewController.m; sourceTree = "<group>"; };
 		0506FB6A1B461A61004733DA /* PostToInstagramViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostToInstagramViewController.h; sourceTree = "<group>"; };
 		0506FB6B1B461A61004733DA /* PostToInstagramViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostToInstagramViewController.m; sourceTree = "<group>"; };
+		0506FB6D1B49CA24004733DA /* FilterViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterViewCell.h; sourceTree = "<group>"; };
+		0506FB6E1B49CA24004733DA /* FilterViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterViewCell.m; sourceTree = "<group>"; };
 		0549E2AD1B361ADF000426A4 /* MediaFullScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaFullScreenViewController.h; sourceTree = "<group>"; };
 		0549E2AE1B361ADF000426A4 /* MediaFullScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaFullScreenViewController.m; sourceTree = "<group>"; };
 		056CE1211B26350A001BAEF3 /* Blocstagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blocstagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -157,6 +160,8 @@
 		056CE1231B26350A001BAEF3 /* Blocstagram */ = {
 			isa = PBXGroup;
 			children = (
+				0506FB6D1B49CA24004733DA /* FilterViewCell.h */,
+				0506FB6E1B49CA24004733DA /* FilterViewCell.m */,
 				0506FB6A1B461A61004733DA /* PostToInstagramViewController.h */,
 				0506FB6B1B461A61004733DA /* PostToInstagramViewController.m */,
 				0506FB641B424187004733DA /* CropBox.h */,
@@ -421,6 +426,7 @@
 				0506FB541B4196FF004733DA /* CameraToolbar.m in Sources */,
 				056CE12A1B26350A001BAEF3 /* AppDelegate.m in Sources */,
 				0506FB6C1B461A61004733DA /* PostToInstagramViewController.m in Sources */,
+				0506FB6F1B49CA24004733DA /* FilterViewCell.m in Sources */,
 				056CE1731B2E3F52001BAEF3 /* LoginViewController.m in Sources */,
 				059A8ECE1B3B4F5600E5B454 /* LikeButton.m in Sources */,
 				056CE16D1B2647DF001BAEF3 /* DataSource.m in Sources */,
