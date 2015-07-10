@@ -92,6 +92,9 @@
         self.navigationItem.rightBarButtonItem = self.sendBarButton;
     }
     
+    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(_previewImageView, _filterCollectionView, _sendButton);
+    NSArray *constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_previewImageView][_filterCollectionView][_sendButton]" options:kNilOptions metrics:nil views:viewsDictionary];
+    [self.view addConstraints:constraints];
     [self.filterCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
     
     self.view.backgroundColor = [UIColor whiteColor];

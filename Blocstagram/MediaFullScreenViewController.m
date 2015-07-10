@@ -9,10 +9,11 @@
 #import "MediaFullScreenViewController.h"
 #import "Media.h"
 
-@interface MediaFullScreenViewController () <UIScrollViewDelegate>
+@interface MediaFullScreenViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
 @property (nonatomic, strong) UITapGestureRecognizer *doubleTap;
+@property (nonatomic, strong) UITapGestureRecognizer *modalTap;
 
 @end
 
@@ -81,6 +82,22 @@
     
 }
 
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    UITapGestureRecognizer *modalTap = [[UITapGestureRecognizer alloc] init];
+    [modalTap addTarget:self action:@selector(modalTapFired:)];
+    modalTap.delegate = self;
+    self.modalTap = modalTap;
+    [self.view.window addGestureRecognizer:self.modalTap];
+    
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.view.window removeGestureRecognizer:self.modalTap];
+}
+
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
@@ -141,5 +158,14 @@
     } else {
         [self.scrollView setZoomScale:self.scrollView.minimumZoomScale animated:YES];
     }
+}
+
+- (void) modalTapFired:(UIGestureRecognizer *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
 }
 @end
