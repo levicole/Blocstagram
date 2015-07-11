@@ -47,4 +47,17 @@
     }
     return self;
 }
+
+- (BOOL) isEqual:(id)object {
+    NSLog(@"Object Class: %@ self class %@", NSStringFromClass([object class]), NSStringFromClass([self class]));
+    if ([object class] == [self class]) {
+        User *otherUser = (User *)object;
+        BOOL idNumberEqual = [self.idNumber isEqual:otherUser.idNumber];
+        BOOL userNameEqual = [self.userName isEqual:otherUser.userName];
+        BOOL fullNameEqual = [self.fullName isEqual:otherUser.fullName];
+        BOOL profilePictureUrlEqual = [self.profilePictureURL isEqual:otherUser.profilePictureURL];
+        return idNumberEqual && userNameEqual && fullNameEqual && profilePictureUrlEqual;
+    }
+    return NO;
+}
 @end

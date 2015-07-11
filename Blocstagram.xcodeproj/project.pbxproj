@@ -15,6 +15,8 @@
 		0506FB691B42460A004733DA /* ImageLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0506FB681B42460A004733DA /* ImageLibraryViewController.m */; };
 		0506FB6C1B461A61004733DA /* PostToInstagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0506FB6B1B461A61004733DA /* PostToInstagramViewController.m */; };
 		0549E2AF1B361ADF000426A4 /* MediaFullScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0549E2AE1B361ADF000426A4 /* MediaFullScreenViewController.m */; };
+		055B3DDC1B5008A500644BCF /* MediaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 055B3DDB1B5008A500644BCF /* MediaTests.m */; };
+		055B3DDE1B5008EA00644BCF /* UserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 055B3DDD1B5008EA00644BCF /* UserTests.m */; };
 		056CE1271B26350A001BAEF3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 056CE1261B26350A001BAEF3 /* main.m */; };
 		056CE12A1B26350A001BAEF3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 056CE1291B26350A001BAEF3 /* AppDelegate.m */; };
 		056CE1321B26350B001BAEF3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 056CE1311B26350B001BAEF3 /* Images.xcassets */; };
@@ -30,6 +32,9 @@
 		05998BBE1B3E34AD00DF8FCD /* ComposeCommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 05998BBD1B3E34AD00DF8FCD /* ComposeCommentView.m */; };
 		059A8ECB1B3B0C6500E5B454 /* CircleSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 059A8ECA1B3B0C6500E5B454 /* CircleSpinnerView.m */; };
 		059A8ECE1B3B4F5600E5B454 /* LikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 059A8ECD1B3B4F5600E5B454 /* LikeButton.m */; };
+		05BACAEB1B50580A00F9B4DB /* ComposeCommentViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BACAEA1B50580A00F9B4DB /* ComposeCommentViewTests.m */; };
+		05BACAEF1B5199A300F9B4DB /* MediaTableViewCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BACAEE1B5199A300F9B4DB /* MediaTableViewCellTests.m */; };
+		05BACAF11B519F3000F9B4DB /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 05BACAF01B519F3000F9B4DB /* 1.jpg */; };
 		493148059E3D28EAEF4990B3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA6AC044BD68EAB423370F2 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +65,8 @@
 		0506FB6B1B461A61004733DA /* PostToInstagramViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostToInstagramViewController.m; sourceTree = "<group>"; };
 		0549E2AD1B361ADF000426A4 /* MediaFullScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaFullScreenViewController.h; sourceTree = "<group>"; };
 		0549E2AE1B361ADF000426A4 /* MediaFullScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaFullScreenViewController.m; sourceTree = "<group>"; };
+		055B3DDB1B5008A500644BCF /* MediaTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaTests.m; sourceTree = "<group>"; };
+		055B3DDD1B5008EA00644BCF /* UserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTests.m; sourceTree = "<group>"; };
 		056CE1211B26350A001BAEF3 /* Blocstagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blocstagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		056CE1251B26350A001BAEF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		056CE1261B26350A001BAEF3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -100,6 +107,9 @@
 		059A8ECA1B3B0C6500E5B454 /* CircleSpinnerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleSpinnerView.m; sourceTree = "<group>"; };
 		059A8ECC1B3B4F5600E5B454 /* LikeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikeButton.h; sourceTree = "<group>"; };
 		059A8ECD1B3B4F5600E5B454 /* LikeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikeButton.m; sourceTree = "<group>"; };
+		05BACAEA1B50580A00F9B4DB /* ComposeCommentViewTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComposeCommentViewTests.m; sourceTree = "<group>"; };
+		05BACAEE1B5199A300F9B4DB /* MediaTableViewCellTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaTableViewCellTests.m; sourceTree = "<group>"; };
+		05BACAF01B519F3000F9B4DB /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
 		BAA6AC044BD68EAB423370F2 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8B774E0A331A813C48E5766 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		DB83D6CEE5599D98A9D63698 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -205,6 +215,11 @@
 		056CE13D1B26350B001BAEF3 /* BlocstagramTests */ = {
 			isa = PBXGroup;
 			children = (
+				05BACAF01B519F3000F9B4DB /* 1.jpg */,
+				05BACAEA1B50580A00F9B4DB /* ComposeCommentViewTests.m */,
+				05BACAEE1B5199A300F9B4DB /* MediaTableViewCellTests.m */,
+				055B3DDD1B5008EA00644BCF /* UserTests.m */,
+				055B3DDB1B5008A500644BCF /* MediaTests.m */,
 				056CE1401B26350B001BAEF3 /* BlocstagramTests.m */,
 				056CE13E1B26350B001BAEF3 /* Supporting Files */,
 			);
@@ -345,6 +360,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05BACAF11B519F3000F9B4DB /* 1.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,7 +431,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				055B3DDC1B5008A500644BCF /* MediaTests.m in Sources */,
 				056CE1411B26350B001BAEF3 /* BlocstagramTests.m in Sources */,
+				055B3DDE1B5008EA00644BCF /* UserTests.m in Sources */,
+				05BACAEF1B5199A300F9B4DB /* MediaTableViewCellTests.m in Sources */,
+				05BACAEB1B50580A00F9B4DB /* ComposeCommentViewTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

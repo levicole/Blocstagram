@@ -174,12 +174,13 @@ static NSParagraphStyle *paragraphStyle;
     CGSize maxSize = CGSizeMake(CGRectGetWidth(self.bounds), CGFLOAT_MAX);
     CGSize usernameLabelSize = [self.usernameAndCaptionLabel sizeThatFits:maxSize];
     CGSize commentLabelSize  = [self.commentLabel sizeThatFits:maxSize];
-    
+    NSLog(@"userNameLabelSize: %f commentLabelSize: %f", usernameLabelSize.height, commentLabelSize.height);
     self.usernameAndCaptionLabelHeightConstraint.constant = usernameLabelSize.height == 0 ? 0 : usernameLabelSize.height + 20;
     self.commentLabelHeightConstraint.constant = commentLabelSize.height == 0 ? 0 : commentLabelSize.height + 20;
     if (self.mediaItem.image.size.width > 0 && CGRectGetWidth(self.contentView.bounds) > 0) {
         if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
             self.imageHeightConstraint.constant = self.mediaItem.image.size.height / self.mediaItem.image.size.width * CGRectGetWidth(self.contentView.bounds);
+            NSLog(@"imageHeightConstraint.constant: %f", self.imageHeightConstraint.constant);
         } else if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
             self.imageHeightConstraint.constant = 320;
         }
@@ -188,6 +189,7 @@ static NSParagraphStyle *paragraphStyle;
     }
     
     self.separatorInset = UIEdgeInsetsMake(0, CGRectGetWidth(self.bounds)/2.0, 0, CGRectGetWidth(self.bounds)/2.0);
+    NSLog(@"width/2.0: %f", CGRectGetWidth(self.bounds)/2);
 }
 
 - (NSMutableAttributedString *) usernameAndCaptionString {

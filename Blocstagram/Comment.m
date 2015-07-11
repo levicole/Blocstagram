@@ -39,4 +39,18 @@
     }
     return self;
 }
+
+-(BOOL) isEqual:(id)object {
+    if ([self class] == [object class]) {
+        Comment *otherComment = (Comment *)object;
+        BOOL idNumberEqual = [self.idNumber isEqual:otherComment.idNumber];
+        BOOL textEqual     = [self.text isEqual:otherComment.text];
+        BOOL fromEqual     = [self.from isEqual:otherComment.from];
+        
+        return idNumberEqual && textEqual && fromEqual;
+    }
+    
+    return NO;
+    
+}
 @end
